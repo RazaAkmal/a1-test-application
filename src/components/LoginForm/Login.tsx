@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, FormEvent, ChangeEvent } from "react";
 import axios from "axios";
 
 import Avatar from "@mui/material/Avatar";
@@ -21,8 +21,8 @@ function Copyright(props: any) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="#">
+        Cozm
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -30,35 +30,41 @@ function Copyright(props: any) {
   );
 }
 
-const Login: React.FC = () => {
+interface LoginProps {}
+
+const Login: React.FC<LoginProps> = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("accessToken");
     if (isLoggedIn) {
-      navigate('/compliance')
+      navigate("/compliance");
     }
-  }, [])
-  
-  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    try {
-      const response = await axios.post(
-        "https://3.93.15.104/api/users/token/",
-        {
-          email,
-          password,
-        }
-      );
+  }, [navigate]);
 
-      const accessToken = response.data.access;
-      localStorage.setItem("accessToken", accessToken);
-      navigate('/compliance')
-    } catch (error) {
-      console.error("Login failed", error);
-    }
-  };
+  const handleLogin = useCallback(
+    async (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      try {
+        const response = await axios.post(
+          "https://3.93.15.104/api/users/token/",
+          {
+            email,
+            password,
+          }
+        );
+
+        const accessToken = response.data.access;
+        localStorage.setItem("accessToken", accessToken);
+        navigate("/compliance");
+      } catch (error) {
+        console.error("Login failed", error);
+      }
+    },
+    [email, password, navigate]
+  );
 
   return (
     <Container component="main" maxWidth="xs">
