@@ -6,6 +6,7 @@ const ApplicationsList = lazy(() => import("./components/ApplicationLists/A1Appl
 const CompletedList = lazy(() => import("./components/ApplicationLists/CompletedList"));
 const SettingsPage = lazy(() => import("./components/Setting/Settings"));
 const LoginForm = lazy(() => import("./components/LoginForm/Login"));
+const MapView = lazy(() => import("./components/MapView/MapView"));
 
 const App: React.FC = () => {
   return (
@@ -40,6 +41,18 @@ const App: React.FC = () => {
               <Suspense fallback={<div>Loading</div>}>
                 <AppDrawer>
                   <CompletedList />
+                </AppDrawer>
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/map-view"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={<div>Loading</div>}>
+                <AppDrawer>
+                  <MapView />
                 </AppDrawer>
               </Suspense>
             </ProtectedRoute>
