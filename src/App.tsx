@@ -1,26 +1,79 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { ReactElement, lazy, Suspense } from "react";
+import { Route, Routes, Navigate, BrowserRouter as Router } from "react-router-dom";
+import AppDrawer from "./components/AppDrawer";
 
-function App() {
+const ApplicationsList = lazy(() => import("./components/ApplicationLists/A1ApplicationsList"));
+const CompletedList = lazy(() => import("./components/ApplicationLists/CompletedList"));
+const SettingsPage = lazy(() => import("./components/Setting/Settings"));
+const LoginForm = lazy(() => import("./components/LoginForm/Login"));
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        {/* Route without the drawer */}
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={<div>Loading</div>}>
+              <LoginForm />
+            </Suspense>
+          }
+        />
+        {/* Routes with the drawer */}
+        <Route
+          path="/compliance"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={<div>Loading</div>}>
+                <AppDrawer>
+                  <ApplicationsList />
+                </AppDrawer>
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/completed-application"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={<div>Loading</div>}>
+                <AppDrawer>
+                  <CompletedList />
+                </AppDrawer>
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/setting"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={<div>Loading</div>}>
+                <AppDrawer>
+                  <SettingsPage />
+                </AppDrawer>
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        {/* Add more routes with the drawer as needed */}
+      </Routes>
+    </Router>
   );
-}
+};
+
+// A private route component to protect routes that require authentication
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const isLoggedIn = localStorage.getItem("accessToken");
+
+  if (!isLoggedIn) {
+    return <Navigate to="/" />;
+  }
+
+  return children as ReactElement<any, any>;
+};
 
 export default App;

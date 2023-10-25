@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.action-table .action-req {
+  color: #1E3542;
+font-family: Inter;
+font-size: 22px;
+font-weight: 600;
+letter-spacing: 0.66px;
+}
+.action-table .action-state{
+  color: #758283;
+font-family: Inter;
+line-height: 18px;
+padding: 10px 0px;
+}
+.action-table .action-state span {
+  color: #A51E22;
+font-family: Inter;
+line-height: 18px;
+text-decoration-line: underline;
+}
+.MuiDataGrid-columnHeaders{
+  background: #CCC;
+}
