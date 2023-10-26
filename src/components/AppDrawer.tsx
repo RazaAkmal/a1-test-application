@@ -63,6 +63,7 @@ const AppDrawer: React.FC<AppDrawerProps> = ({ children }) => {
     localStorage.removeItem('accessToken')
     navigate('/')
   };
+  const location = window.location
 
   return (
       <Box sx={{ display: 'flex' }}>
@@ -94,9 +95,12 @@ const AppDrawer: React.FC<AppDrawerProps> = ({ children }) => {
           anchor="left"
           open={open}
         >
-          <DrawerHeader sx={{ justifyContent: 'flex-start' }}>
+          <DrawerHeader sx={{ justifyContent: 'flex-start', '& .MuiIconButton-root:hover': {
+                backgroundColor: '#FBF0F0' 
+              },
+             }}>
             <IconButton onClick={handleDrawerClose}>
-              <img src="/icon/menu.svg" alt="" />
+              <img src="/icon/red-menu.svg" alt="" />
             </IconButton>
           </DrawerHeader>
           <Divider />
@@ -107,7 +111,7 @@ const AppDrawer: React.FC<AppDrawerProps> = ({ children }) => {
               { text: 'Map View', path: '/map-view' },
               { text: 'Setting', path: '/setting' },
             ].map((item, index) => (
-              <ListItem key={item.text} disablePadding>
+              <ListItem key={item.text} disablePadding className={location.pathname === item.path ? "active-menu" : ''}>
                 <ListItemButton component={Link} to={item.path}>
                   <ListItemIcon>
                     {index === 0 && <img src="/icon/ActionRequired.svg" alt="" />}
@@ -121,7 +125,7 @@ const AppDrawer: React.FC<AppDrawerProps> = ({ children }) => {
             ))}
           </List>
         </Drawer>
-        <Main open={open}>
+        <Main open={open} sx={{ width: '75%'}}>
           <DrawerHeader />
           {children}
         </Main>

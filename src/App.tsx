@@ -1,6 +1,7 @@
 import React, { ReactElement, lazy, Suspense } from "react";
 import { Route, Routes, Navigate, BrowserRouter as Router } from "react-router-dom";
 import AppDrawer from "./components/AppDrawer";
+import Footer from "./components/Footer";
 
 const ApplicationsList = lazy(() => import("./components/ApplicationLists/A1ApplicationsList"));
 const CompletedList = lazy(() => import("./components/ApplicationLists/CompletedList"));
@@ -16,7 +17,7 @@ const App: React.FC = () => {
         <Route
           path="/"
           element={
-            <Suspense fallback={<div>Loading</div>}>
+            <Suspense fallback={<div style={{ height: '100vh'}}>Loading</div>}>
               <LoginForm />
             </Suspense>
           }
@@ -26,7 +27,7 @@ const App: React.FC = () => {
           path="/compliance"
           element={
             <ProtectedRoute>
-              <Suspense fallback={<div>Loading</div>}>
+              <Suspense fallback={<div style={{ height: '100vh'}}>Loading</div>}>
                 <AppDrawer>
                   <ApplicationsList />
                 </AppDrawer>
@@ -38,7 +39,7 @@ const App: React.FC = () => {
           path="/completed-application"
           element={
             <ProtectedRoute>
-              <Suspense fallback={<div>Loading</div>}>
+              <Suspense fallback={<div style={{ height: '100vh'}}>Loading</div>}>
                 <AppDrawer>
                   <CompletedList />
                 </AppDrawer>
@@ -50,7 +51,7 @@ const App: React.FC = () => {
           path="/map-view"
           element={
             <ProtectedRoute>
-              <Suspense fallback={<div>Loading</div>}>
+              <Suspense fallback={<div style={{ height: '100vh'}}>Loading</div>}>
                 <AppDrawer>
                   <MapView />
                 </AppDrawer>
@@ -62,7 +63,7 @@ const App: React.FC = () => {
           path="/setting"
           element={
             <ProtectedRoute>
-              <Suspense fallback={<div>Loading</div>}>
+              <Suspense fallback={<div style={{ height: '100vh'}}>Loading</div>}>
                 <AppDrawer>
                   <SettingsPage />
                 </AppDrawer>
@@ -72,6 +73,7 @@ const App: React.FC = () => {
         />
         {/* Add more routes with the drawer as needed */}
       </Routes>
+      <Footer />
     </Router>
   );
 };

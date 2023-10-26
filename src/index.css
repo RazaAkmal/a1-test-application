@@ -34,3 +34,21 @@ text-decoration-line: underline;
 .MuiDataGrid-columnHeaders{
   background: #CCC;
 }
+.footer-links {
+  list-style: none;
+  display: flex;
+  gap: 12px;
+}
+
+.footer-links li {
+  margin-right: 10px; 
+}
+
+.footer-links a {
+  color: #fff; 
+}
+.active-menu{
+  background-color: #FBF0F0;
+  border-right: 5px solid #A51E22;
+  color: #A51E22;
+}

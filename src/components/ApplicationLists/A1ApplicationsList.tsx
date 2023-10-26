@@ -92,7 +92,7 @@ const ComplianceList: React.FC = () => {
   }, [data, homeCountryFilter, hostCountryFilter]);
 
   return (
-    <div style={{ height: 400, width: "85%" }} className="action-table">
+    <div style={{ height: 400, width: "100%" }} className="action-table">
       <Box>
         <Typography variant="h5" className="action-req">
           Actions Required
